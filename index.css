@@ -1,4 +1,19 @@
 body {
-	background-color: #232323;
+	background-color: #24252D;
 	color: white;
+	font-family: 'Roboto Mono', monospace;
+	font-size: 10px;
+}
+
+h2 {
+	
+	font-weight: 300;
+	margin: 0 0 .5em 0;
+	color: #E9BC3F;
+	font-size: 15px;
+}
+
+h1 {
+	font-size: 30px;
+	padding-top: 10px;
 }
