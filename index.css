@@ -1,8 +1,9 @@
 body {
 	background-color: #24252D;
 	color: white;
-	font-family: consolas, monospace;
-	font-size: .8em;
+	font-family: consolas:
+	font-size: 1.2em;
+	
 }
 
 h2 {
