@@ -6,7 +6,10 @@
 }
 
 .col p {
+    text-align: left;
     font-size: 0.7em;
+    width: 250px;
+
 }
 
 body { 
@@ -27,7 +30,7 @@ h5 {
 }
 
 .name-box{
-    padding-top: 50px;
+    padding-top: 10px;
     padding-right: 300px;
 }
 
