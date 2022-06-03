@@ -5,6 +5,7 @@
     
 }
 
+
 .col-md-2 p {
     text-align: left;
     font-size: 0.7em;
@@ -42,4 +43,10 @@ h5 {
 
 .links {
     font-size: 0.7em;
+    
+    
 }
+
+.links:hover  {
+     font-size: 90%;
+ }
