@@ -22,9 +22,13 @@ h2{
     text-align: center;
 }
 
+h5 {
+    text-align: center;
+}
+
 .name-box{
-    
-    padding-top: 100px;
+    padding-top: 50px;
+    padding-right: 300px;
 }
 
 .name-box h4 {
