@@ -5,7 +5,8 @@
     
 }
 
-.col p {
+
+.col-md-2 p {
     text-align: left;
     font-size: 0.7em;
     width: 250px;
@@ -29,16 +30,23 @@ h5 {
     text-align: center;
 }
 
-.name-box{
+.col-md-8{
     padding-top: 10px;
-    padding-right: 300px;
+    padding-right: 150px;
+
 }
 
-.name-box h4 {
+.col-md-8 h4 {
     color: #E9BC3F;
     font-size: 0.8em;
 }
 
 .links {
     font-size: 0.7em;
+    
+    
 }
+
+.links:hover  {
+     font-size: 90%;
+ }
