@@ -30,13 +30,13 @@ h5 {
     text-align: center;
 }
 
-.col-md-8{
+.col{
     padding-top: 10px;
     padding-right: 150px;
 
 }
 
-.col-md-8 h4 {
+.col h4 {
     color: #E9BC3F;
     font-size: 0.8em;
 }
