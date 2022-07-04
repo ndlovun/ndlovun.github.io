@@ -17,8 +17,8 @@ body {
     margin-top: 40px;
     background-color: #24252D;
 	color: white;
-    font-family: consolas;
-	font-size: 1.3em;
+    /* font-family: consolas; */
+	font-size: 1.25em;
  
 }
 
@@ -41,6 +41,9 @@ h5 {
     font-size: 0.8em;
 }
 
+h3 {
+    color: #E9BC3F;
+}
 .links {
     font-size: 0.7em;
     
@@ -50,3 +53,21 @@ h5 {
 .links:hover  {
      font-size: 90%;
  }
+
+ pre {
+    background: #f4f4f4;
+    /* border: 1px solid #ddd; */
+    border-left: 3px solid #f2334c;
+    color: #666;
+    page-break-inside: avoid;
+    /* font-family: monospace; */
+    /* font-size: 15px; */
+    /* line-height: 1.6; */
+    /* margin-bottom: 1.6em; */
+    /* max-width: 100%; */
+    overflow: auto;
+    /* padding: 1em 1.5em; */
+    /* display: block; */
+    word-wrap: break-word;
+    width: 1100px;
+  }
