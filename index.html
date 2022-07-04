@@ -47,7 +47,7 @@
                     </ul>
                 </p>
                 <ul>
-                <h4>Prerequisites:</h4>
+                <h3>Prerequisites:</h3>
                 <ul>                  
                     <li><a href="https://docs.docker.com/get-docker/" target="blank">Docker</a></li>
                     <li><a href="https://hub.docker.com/" target="blank">Docker hub account</a></li>
@@ -68,7 +68,7 @@
                 </pre>                                 
                 
                             
-                <h4>Creating the Docker image.</h4>                  
+                <h3>Creating the Docker image.</h3>                  
             
                 <p>
                         Create a Dockerfile.
@@ -112,7 +112,7 @@
             </pre>
             
 
-                <h4>Creating the EKS cluster.</h4> 
+                <h3>Creating the EKS cluster.</h3> 
                 <p>
                    To create the EKS cluster we will use eksctl which makes it easy to build a Kubernetes cluster on AWS using EKS. To make even easier you can run the commands 
                    using a bash script. I am using named profiles for the AWS CLI, you can read about them <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html" target="blank">here</a>, 
@@ -148,7 +148,7 @@
                     </pre>
 
                
-                <h4>Deploying the application to EKS.</h4> 
+                <h3>Deploying the application to EKS.</h3> 
                 <p>
                     Now that you have a cluster in AWS you can deploy the image created earlier. There are three yaml files that will ....
                     .Run the following command to deploy the application to the cluster.
