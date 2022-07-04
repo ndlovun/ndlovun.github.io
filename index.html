@@ -30,76 +30,177 @@
                 <hr>
             
                 <p>
-                    When learning something new I like to start with the complete picture at hand. I may not understand what I am looking at, but having the full picture; then 
+                    When learning something new I like to start with the complete picture at hand. I may not understand what I am looking at, but having the full picture, then 
                     learning its individual parts is more enjoyable than the oposite, learning the parts then putting them together at the end. In this short guide I will
                     show you how to create a Docker image from your code, deploy a Kubernetes cluster in AWS using EKS, and then run your "web app" in the Kubernetes cluster.
                     If you're on a budget like me you will want to bring up your Kubernetes cluster mess around with it and then remove all the resources so you don't run up your AWS bill. 
+
+        
                 </p>
                 
                 <p>
-                    To follow along you will need the following. I am doing this on Ubuntu 22.04 but the same can be achived on Windows.
-                    These are the steps we will follow:
+                    I did this on Ubuntu 22.04 but the same can be achived on Windows. These are the three major steps I will cover.
                     <ul>
-                        <li>Create Docker Image</li>
-                        <li>Create EKS cluster</li>
-                        <li>Deploy the application on the EKS cluster</li>
+                        <li>Creating a Docker Image</li>
+                        <li>Create an EKS cluster</li>
+                        <li>Deploying the application on the EKS cluster</li>
                     </ul>
                 </p>
                 <ul>
                 <h4>Prerequisites:</h4>
-                <ul>
+                <ul>                  
+                    <li><a href="https://docs.docker.com/get-docker/" target="blank">Docker</a></li>
+                    <li><a href="https://hub.docker.com/" target="blank">Docker hub account</a></li>
+                    <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html" target="blank">AWS CLI</a></li>
                     <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html" target="blank">eksctl</a></li>
                     <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/" target="blank">kubectl</a></li>
-                    <li><a href="https://hub.docker.com/" target="blank">Docker hub account</a></li>
                 </ul>
                 </ul>
                
-                <p>
-                    If you don't have any code of your own you can clone my repository:
-                </p>
+                <p>Clone the repository to get the code for our "web app", and then change directory to the ChessSquareTrainer folder.</p>
                 
-                <p>
+                
+                    <pre>
                     <code>
                         git clone https://github.com/ndlovun/ChessSquareTrainer.git
-                    </code>                                    
-                </p>
+                        cd ChessSquareTrainer
+                    </code>   
+                </pre>                                 
+                
                             
                 <h4>Creating the Docker image.</h4>                  
             
                 <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur quam quibusdam
-                        cupiditate esse quis asperiores. Dignissimos quaerat ratione, obcaecati beatae ipsam
-                        maiores dolore! Facilis repudiandae asperiores natus optio soluta necessitatibus!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, repellat velit
-                        eos unde error maxime molestias nulla nesciunt dignissimos voluptas perspiciatis quam
-                        modi quasi quia aperiam necessitatibus placeat nam deserunt!
-            
+                        Create a Dockerfile.
                 </p>
+                <pre>
+                        <code>
+                            FROM httpd:alpine
+                            COPY . /usr/local/apache2/htdocs/
+                        </code>
+                    </pre>
+
+            <p>
+                Then, run the following commands to build the docker image:
+            </p>
+                <pre>
+                <code>
+                    docker build -t kndlovun/chess-trainer:chess-alpine . 
+                </code>
+            </pre>
+           
+            
+            <p>At this point you can run the image locally to test that it works.</p>
+            <p>
+                <pre>
+                <code>
+                    docker run -dit --name chess-trainer-app -p 8080:80 kndlovun/chess-trainer:chess-alpine 
+                </code>
+            </pre>
+            </p>
+            <p>If you navigate to http:localhost:8080 you will see your web app.Next you need to push the image to Docker Hub so its available to pull from Docker Hub later. You 
+                will need to login to Docker Hub on the CLI before pushing the image.
+            </p>
+
+            <pre>
+                <code>
+                    docker login 
+                    Username: *******
+                    Password: *******
+                    docker push kndlovun/chess-trainer:chess-alpine 
+                </code>
+            </pre>
+            
 
                 <h4>Creating the EKS cluster.</h4> 
                 <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur quam quibusdam
-                        cupiditate esse quis asperiores. Dignissimos quaerat ratione, obcaecati beatae ipsam
-                        maiores dolore! Facilis repudiandae asperiores natus optio soluta necessitatibus!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, repellat velit
-                        eos unde error maxime molestias nulla nesciunt dignissimos voluptas perspiciatis quam
-                        modi quasi quia aperiam necessitatibus placeat nam deserunt!
-            
+                   To create the EKS cluster we will use eksctl which makes it easy to build a Kubernetes cluster on AWS using EKS. To make even easier you can run the commands 
+                   using a bash script. I am using named profiles for the AWS CLI, you can read about them <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html" target="blank">here</a>, 
+                   so you can use the default or create your own named profile either way you will have to modify the --profile option in the eksctl command. If using the default 
+                   AWS CLI with no named profiles you can remove the --profile flag. You can also adjust the AWS region you want to deploy your cluster to by editing the --region flag.
                 </p>
 
-                <h4>Deploting the application to EKS.</h4> 
+                <pre>
+                    <code>
+                        #!/bin/bash
+                        echo 'Starting EKS deployment'
+                        echo 'Go get some coffee this may take a while ....'
+                        eksctl create cluster \
+                        --name chess-cluster \
+                        --node-type t2.micro \
+                        --nodes 2 \
+                        --nodes-min 2 \
+                        --nodes-max 3 \
+                        --region us-east-2\
+                        --profile labadmin
+
+                        echo 'Cluster is ready ...' 
+                    </code>
+                </pre>
                 <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur quam quibusdam
-                        cupiditate esse quis asperiores. Dignissimos quaerat ratione, obcaecati beatae ipsam
-                        maiores dolore! Facilis repudiandae asperiores natus optio soluta necessitatibus!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, repellat velit
-                        eos unde error maxime molestias nulla nesciunt dignissimos voluptas perspiciatis quam
-                        modi quasi quia aperiam necessitatibus placeat nam deserunt!
+                    After the Cluster is ready run the following command to view your cluster nodes.
+                </p>
+                    <pre>
+                        <code>
+                            kubectl get nodes -o wide
+                            
+                        </code>
+                    </pre>
+
+               
+                <h4>Deploying the application to EKS.</h4> 
+                <p>
+                    Now that you have a cluster in AWS you can deploy the image created earlier. There are three yaml files that will ....
+                    .Run the following command to deploy the application to the cluster.
             
+                </p>
+                <pre>
+                    <code>
+                        kubectl apply -f eks-chess-deployment.yaml
+                        kubectl apply -f eks-chess-service.yaml
+                        kubectl apply -f eks-chess-lb.yaml 
+                    </code>
+                </pre>
+
+                <p>
+                    The deployment creates 2 pods running your application. to see the pods run the following command:
+
+                </p>
+                <pre>
+                    <code>
+                        kubectl get pods
+                        NAME                                    READY   STATUS    RESTARTS   AGE
+                        eks-chess-deployment-6577f65ccc-9qtc9   1/1     Running   0          29s
+                        eks-chess-deployment-6577f65ccc-rzmkj   1/1     Running   0          29s
+                    </code>
+                </pre>
+
+                <p>
+                    A NodePort service is created and also a loadbalancer:
+
+                </p>
+                <pre>
+                    <code>
+                        kubectl get svc
+                        NAME         TYPE           CLUSTER-IP       EXTERNAL-IP                                                              PORT(S)        AGE
+                        cloud-lb     LoadBalancer   10.100.119.200   a1b9ad9ae7cc74c53ae3ff6d335905bf-968043654.us-east-2.elb.amazonaws.com   80:30931/TCP   116s
+                        kubernetes   ClusterIP      10.100.0.1       <none>                                                                   443/TCP        56m
+                        svc-chess    NodePort       10.100.81.78     <none>                                                                   80:30001/TCP   2m1s
+                    </code>
+                </pre>
+
+                <p>If you navigate to the loadbalancer url you will be able to see the  Chess Squares Trainer application. If you already have a hosted zone in Route53 you can 
+                    create an Alias record pointing to the loadbalancer url. You can playaround with the Kubernetes cluster and when you are done you can run the destroy_eks_cluster.sh
+                    bash script.
+                </p>
+
+                <p>
+                    This short guide is not meant to teach you all the technologies involved but to spark an interest in that part of you that wants to know how all this works. 
+                    You can now work backwards and dig into all the pieces while having the complete picture to reference.
                 </p>
 
                 <hr>
-                    <h5><a href="blog_entry_0.html">Previous Blog entry</a></h5>
+                    <!-- <h5><a href="blog_entry_0.html">Previous Blog entry</a></h5> -->
                 <hr>
             </div>
             <div class="col-md-2">
