@@ -32,21 +32,19 @@
                 <p>
                     When learning something new I like to start with the complete picture at hand. I may not understand what I am looking at, but having the full picture, then 
                     learning its individual parts is more enjoyable than the oposite, learning the parts then putting them together at the end. In this short guide I will
-                    show you how to create a Docker image from your code, deploy a Kubernetes cluster in AWS using EKS, and then run your "web app" in the Kubernetes cluster.
-                    If you're on a budget like me you will want to bring up your Kubernetes cluster mess around with it and then remove all the resources so you don't run up your AWS bill. 
-
-        
+                    show you how to create a Docker image, deploy a Kubernetes cluster in AWS using EKS, and then run your "web app" in the Kubernetes cluster.
+                    If you're on a budget like me you will want to bring up your Kubernetes cluster mess around with it and then remove all the resources so you don't run up your AWS bill.         
                 </p>
                 
                 <p>
                     I did this on Ubuntu 22.04 but the same can be achived on Windows. These are the three major steps I will cover.
                     <ul>
                         <li>Creating a Docker Image</li>
-                        <li>Create an EKS cluster</li>
+                        <li>Creating an EKS cluster</li>
                         <li>Deploying the application on the EKS cluster</li>
                     </ul>
                 </p>
-                <ul>
+                
                 <h3>Prerequisites:</h3>
                 <ul>                  
                     <li><a href="https://docs.docker.com/get-docker/" target="blank">Docker</a></li>
@@ -189,10 +187,21 @@
                     </code>
                 </pre>
 
-                <p>If you navigate to the loadbalancer url you will be able to see the  Chess Squares Trainer application. If you already have a hosted zone in Route53 you can 
-                    create an Alias record pointing to the loadbalancer url. You can playaround with the Kubernetes cluster and when you are done you can run the destroy_eks_cluster.sh
-                    bash script.
+                <p>If you navigate to the loadbalancer url you will be able to see the Chess Squares Trainer application. If you already have a hosted zone in Route53 you can 
+                    create an Alias record pointing to the loadbalancer url. You can playaround with the Kubernetes cluster and when you are done you can create a bash script to 
+                    delete the EKS cluster or just run the eksctl command. Its convinient to create a bash script so you don't have to remember the eksctl command. You wil need to edit the region and profile the same way you did when you created the cluster.
                 </p>
+                <pre>
+                    <code>
+                        #!/bin/bash
+                        echo 'Starting EKS destruction!'
+                        echo 'Go get some coffee this may take a while ....'
+                        eksctl delete cluster --name chess-cluster --region us-east-2 --profile labadmin
+
+                        echo 'Deletion complete!!'
+                    </code>
+                </pre>
+
 
                 <p>
                     This short guide is not meant to teach you all the technologies involved but to spark an interest in that part of you that wants to know how all this works. 
