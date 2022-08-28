@@ -97,7 +97,7 @@
                 </code>
             </pre>
             </p>
-            <p>If you navigate to http:localhost:8080 you will see your web app.Next you need to push the image to Docker Hub so its available to pull from Docker Hub later. You 
+            <p>If you navigate to http://localhost:8080 you will see your web app.Next you need to push the image to Docker Hub so its available to pull from Docker Hub later. You 
                 will need to login to Docker Hub on the CLI before pushing the image.
             </p>
 
@@ -113,9 +113,9 @@
 
                 <h3>Creating the EKS cluster.</h3> 
                 <p>
-                   To create the EKS cluster we will use eksctl which makes it easy to build a Kubernetes cluster on AWS using EKS. To make even easier you can run the commands 
+                   To create the EKS cluster we will use eksctl which makes it easy to build a Kubernetes cluster on AWS using EKS. To make it even easier you can run the commands 
                    using a bash script. I am using named profiles for the AWS CLI, you can read about them <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html" target="blank">here</a>, 
-                   so you can use the default or create your own named profile either way you will have to modify the --profile option in the eksctl command. If using the default 
+                   . You can use the default settings or create your own named profile either way you will have to modify the --profile option in the eksctl command. If using the default 
                    AWS CLI with no named profiles you can remove the --profile flag. You can also adjust the AWS region you want to deploy your cluster to by editing the --region flag.
                 </p>
 
@@ -128,8 +128,6 @@
                         --name chess-cluster \
                         --node-type t2.micro \
                         --nodes 2 \
-                        --nodes-min 2 \
-                        --nodes-max 3 \
                         --region us-east-2\
                         --profile labadmin
 
@@ -149,8 +147,7 @@
                
                 <h3>Deploying the application to EKS.</h3> 
                 <p>
-                    Now that you have a cluster in AWS you can deploy the image created earlier. There are three yaml files that will ....
-                    .Run the following command to deploy the application to the cluster.
+                    Now that you have a cluster in AWS you can deploy the image created earlier. Run the following command to deploy the application to the cluster.
             
                 </p>
                 <pre>
@@ -175,7 +172,7 @@
                 </pre>
 
                 <p>
-                    A NodePort service is created and also a loadbalancer:
+                    A NodePort service and a loadbalancer are created:
 
                 </p>
                 <pre>
